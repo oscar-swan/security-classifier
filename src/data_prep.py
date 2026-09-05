@@ -75,7 +75,7 @@ def process_dataset() -> None:
                     skipped_files.append(str(src_path))
                     continue
 
-                dst_path = PROCESSED_ROOT / class_name / split_name / src_path.name
+                dst_path = PROCESSED_ROOT / split_name / class_name / src_path.name
 
                 try:
                     process_image(src_path, dst_path)
