@@ -4,6 +4,7 @@ from torchvision import transforms
 from torchvision.datasets import ImageFolder
 from torch.utils.data import DataLoader
 from pathlib import Path
+from config import ROTATION_DEGREES, ZOOM_OUT_PROB, ZOOM_OUT_SCALE_RANGE, ZOOM_OUT_FILL
 
 
 #Assigns directory route correctly
@@ -47,8 +48,8 @@ class RandomZoomOut:
 #Training data pipeline
 train_transform = transforms.Compose([
     transforms.RandomHorizontalFlip(),
-    transforms.RandomRotation(10),
-    RandomZoomOut(scale_range=(0.6, 1.0), probability=0.4),
+    transforms.RandomRotation(ROTATION_DEGREES),
+    RandomZoomOut(scale_range=ZOOM_OUT_SCALE_RANGE, probability=ZOOM_OUT_PROB, fill=ZOOM_OUT_FILL),
     transforms.ToTensor(),
     transforms.Normalize(
         mean=[0.485, 0.456, 0.406],

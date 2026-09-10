@@ -1,6 +1,7 @@
 import shutil
 from pathlib import Path
 from PIL import Image
+from config import IMAGE_SIZE
 
 SCRIPT_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = SCRIPT_DIR.parent
@@ -10,7 +11,7 @@ PROCESSED_ROOT = PROJECT_ROOT / "data" / "processed"
 CLASSES = ["Animal", "Human", "Nothing", "Vehicle"]
 SPLITS = ["Train", "Val", "Test"]
 
-TARGET_SIZE = 224
+TARGET_SIZE = IMAGE_SIZE
 VALID_EXTENSIONS = {".jpg", ".jpeg", ".png", ".bmp", ".webp"}
 
 
