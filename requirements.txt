@@ -1,3 +1,4 @@
 pillow
 torchvision
 wandb
+scikit-learn
