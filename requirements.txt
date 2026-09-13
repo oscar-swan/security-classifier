@@ -1,5 +1,8 @@
-pillow
-torchvision
+--extra-index-url https://download.pytorch.org/whl/cpu
+gunicorn
+pillow==12.3.0
+torch==2.14.0
+torchvision==0.29.0
 wandb
 scikit-learn
-flask
+Flask==3.1.3
