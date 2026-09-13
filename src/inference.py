@@ -16,7 +16,7 @@ infer_transform = transforms.Compose([
 
 def load_model(checkpoint_path, device):
     #Builds the model and adds the trained weights on to it
-    model = build_model(num_classes=NUM_CLASSES)
+    model = build_model(num_classes=NUM_CLASSES, pretrained=False)
     model.load_state_dict(torch.load(checkpoint_path, map_location=device))
     model.to(device)
     model.eval()

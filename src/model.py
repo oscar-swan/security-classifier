@@ -2,8 +2,9 @@ import torch.nn as nn
 from torchvision import models
 from config import NUM_CLASSES, UNFROZEN_LAYERS
 
-def build_model(num_classes=NUM_CLASSES):
-    model = models.resnet18(weights=models.ResNet18_Weights.IMAGENET1K_V1)
+def build_model(num_classes=NUM_CLASSES, pretrained=True):
+    weights = models.ResNet18_Weights.IMAGENET1K_V1 if pretrained else None
+    model = models.resnet18(weights=weights)
     #Disables parameter updating in early layers
     for name, param in model.named_parameters():
         if any(name.startswith(layer) for layer in UNFROZEN_LAYERS):
