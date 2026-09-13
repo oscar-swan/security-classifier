@@ -2,3 +2,4 @@ pillow
 torchvision
 wandb
 scikit-learn
+flask

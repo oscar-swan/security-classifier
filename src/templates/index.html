@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>security-classifier</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+</head>
+<body>
+  <main class="monitor">
+    <header class="monitor__header">
+      <span class="status-dot" aria-hidden="true"></span>
+      <div class="monitor__titles">
+        <h1>Security Classifier</h1>
+        <p>Sorts a still frame into Animal, Human, Nothing or Vehicle.</p>
+      </div>
+    </header>
+
+    <section class="panel">
+      <label for="file-input" id="drop-zone" class="drop-zone">
+        <div class="drop-zone__corner drop-zone__corner--tl"></div>
+        <div class="drop-zone__corner drop-zone__corner--tr"></div>
+        <div class="drop-zone__corner drop-zone__corner--bl"></div>
+        <div class="drop-zone__corner drop-zone__corner--br"></div>
+        <img id="preview" alt="" hidden />
+        <p id="drop-zone-text">Drop a frame here, or click to choose one</p>
+      </label>
+      <input type="file" id="file-input" accept=".jpg,.jpeg,.png,.bmp,.webp" hidden />
+
+      <button id="analyse-btn" type="button" disabled>Analyse</button>
+
+      <p id="message" class="message" role="status" aria-live="polite"></p>
+
+      <div id="results" class="results" hidden>
+        <p class="results__top">
+          <span id="top-label">—</span>
+          <span id="top-confidence" class="results__top-confidence"></span>
+        </p>
+        <ul id="bars" class="bars"></ul>
+      </div>
+    </section>
+  </main>
+
+  <script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

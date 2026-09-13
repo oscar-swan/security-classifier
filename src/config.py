@@ -1,5 +1,6 @@
 SEED = 10
 
+#Model
 IMAGE_SIZE = 224
 
 ROTATION_DEGREES = 10
@@ -15,3 +16,7 @@ LR_HEAD = 1e-3
 LR_BACKBONE = 1e-4
 MAX_EPOCHS = 50
 PATIENCE = 7
+
+#App
+APP_IMAGE_TYPES = {"jpg", "jpeg", "png", "bmp", "webp"}
+APP_MAX_IMAGE_SIZE = 8 * 1024 * 1024
