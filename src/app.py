@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 import torch
 from flask import Flask, render_template, request, jsonify
@@ -10,6 +11,9 @@ CHECKPOINT_PATH = BASE_DIR.parent / "checkpoints" / "best_model_8wx370pt.pth"
 
 ALLOWED_EXTENSIONS = APP_IMAGE_TYPES
 MAX_CONTENT_LENGTH = APP_MAX_IMAGE_SIZE
+
+if os.environ.get("RENDER"):
+    torch.set_num_threads(1)
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model = load_model(CHECKPOINT_PATH, device)

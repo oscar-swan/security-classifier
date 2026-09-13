@@ -1,3 +1,4 @@
+import time
 import torch
 from PIL import Image
 from torchvision import transforms
@@ -34,8 +35,10 @@ def preprocess_image(pil_image: Image.Image) -> torch.Tensor:
 
 def predict(model, device, pil_image: Image.Image) -> dict:
     #Predicts what uploaded image is with confidence ratings for each class
+    t0 = time.time()
     tensor = preprocess_image(pil_image).to(device)
     with torch.no_grad():
         logits = model(tensor)
         probs = torch.softmax(logits, dim=1).squeeze(0).cpu().tolist()
+        print(f"Inference took {time.time() - t0:.2f}s", flush=True)
     return {name: round(prob * 100, 1) for name, prob in zip(CLASS_NAMES, probs)}
