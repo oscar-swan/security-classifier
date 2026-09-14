@@ -20,3 +20,4 @@ PATIENCE = 7
 #App
 APP_IMAGE_TYPES = {"jpg", "jpeg", "png", "bmp", "webp"}
 APP_MAX_IMAGE_SIZE = 8 * 1024 * 1024
+CURRENT_MODEL = "best_model_8wx370pt.pth"

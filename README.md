@@ -126,11 +126,11 @@ Finally, I added config.py which contains all the parameters across the entire p
 
 I wrote evaluate.py and ran it on a model trained with the same parameters as before, just with the seed fixed now, and got precision, recall and F1 scores. Test accuracy came out at 93.4% and only 6 images were misclassified.
 
-The animal class had 100% recall and 96.2% precision which was my best performing class. The human class had 100% precision and 90% recall. Human is arguably the most important class to get right in a security context, so when I checked the confusion matrix I could see the 2 human misclassifications were both predicted as vehicle and upon checking both of those images I could see they both contained vehicles.
+The animal class had 100% recall and 96.2% precision which was my best performing class. The human class had 90% recall and 100% precision. Human is arguably the most important class to get right in a security context, so when I checked the confusion matrix I could see the 2 human misclassifications were both predicted as vehicle and upon checking both of those images I could see they both contained vehicles.
 
 Some human images in the dataset include background vehicles, since a human is often the focus of the shot even with a car present, and the model needs to learn to class the focus of the image rather than the background as a lot of security footage will naturally contain background vehicles but this is harder to learn with the small dataset. Upon checking the human testing data again, 6 of the 20 human images contained background vehicles, so despite this it still correctly classed ⅔ of the human test images that had cars in them, which is a good sign although it's worth noting the human test set had a disproportionate share of these compared to the training set, and adding more could help.
 
-Nothing scored 90% precision and recall and vehicle scored 92% recall, 89% precision which was lower than the others, but expected, since vehicles are naturally present in the background of a lot of CCTV images generally, so honestly not a bad outcome.
+Nothing scored 90% on both recall and precision and vehicle scored 92% recall, 89% precision which was lower than the others, but expected, since vehicles are naturally present in the background of a lot of CCTV images generally, so honestly not a bad outcome.
 
 After checking the remaining 4 of 6 misclassified images, one nothing image containing a wheely bin was classed as a vehicle, likely thrown off by the box shape and wheels. Another nothing image was a black and white grass area with dark patches of leaves on the ground, which may have been mistaken for a small rodent, though this looked more like a blunder. The last two images were vehicle images classed as nothing, one was a very distant shot where the vehicle was only a small part of the image, but still the focus, and the other was a top down shot of a car, an angle underrepresented in the dataset. These two suggest a larger, more diverse dataset covering more distances and angles could help.
 
@@ -157,7 +157,7 @@ I tried some interesting edge cases in an attempt to understand what traits the 
 
 I uploaded the program to Render with a live link.
 
-Image analysis wasn't working through the live link. Initially, I initially suspected a memory issue, so I tried a separate, leaner requirements list for Render only which excluded training only packages like scikit-learn and W&B in an attempt to save memory but that didn't fix it.
+Image analysis wasn't working through the live link. I initially suspected a memory issue, so I tried a separate, leaner requirements list for Render only which excluded training only packages like scikit-learn and W&B in an attempt to save memory but that didn't fix it.
 
 Eventually, I realised the program was spawning 8 threads to match my PC's CPU, but Render's free tier only allocates 10% of a core. Splitting that tiny amount of power across 8 threads meant a lot of time and power was spent switching between threads than was gained from parallelising.
 

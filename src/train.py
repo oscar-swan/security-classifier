@@ -27,11 +27,11 @@ def training():
     wandb.init(
         project="security-classifier",
         config={
-            "epochs": 50,
-            "patience": 7,
-            "batch_size": 32,
-            "lr_head": 1e-3,
-            "lr_backbone": 1e-4,
+            "epochs": MAX_EPOCHS,
+            "patience": PATIENCE,
+            "batch_size": BATCH_SIZE,
+            "lr_head": LR_HEAD,
+            "lr_backbone": LR_BACKBONE,
             "optimizer": "AdamW",
             "seed": SEED
         }

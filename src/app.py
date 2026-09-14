@@ -4,10 +4,10 @@ import torch
 from flask import Flask, render_template, request, jsonify
 from PIL import Image, UnidentifiedImageError
 from inference import load_model, predict
-from config import APP_IMAGE_TYPES, APP_MAX_IMAGE_SIZE
+from config import APP_IMAGE_TYPES, APP_MAX_IMAGE_SIZE, CURRENT_MODEL
 
 BASE_DIR = Path(__file__).resolve().parent
-CHECKPOINT_PATH = BASE_DIR.parent / "checkpoints" / "best_model_8wx370pt.pth"
+CHECKPOINT_PATH = BASE_DIR.parent / "checkpoints" / CURRENT_MODEL
 
 ALLOWED_EXTENSIONS = APP_IMAGE_TYPES
 MAX_CONTENT_LENGTH = APP_MAX_IMAGE_SIZE

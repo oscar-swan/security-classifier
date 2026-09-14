@@ -48,7 +48,7 @@ class RandomZoomOut:
 #Training data pipeline
 train_transform = transforms.Compose([
     transforms.RandomHorizontalFlip(),
-    transforms.RandomRotation(ROTATION_DEGREES),
+    transforms.RandomRotation(ROTATION_DEGREES, fill=ZOOM_OUT_FILL),
     RandomZoomOut(scale_range=ZOOM_OUT_SCALE_RANGE, probability=ZOOM_OUT_PROB, fill=ZOOM_OUT_FILL),
     transforms.ToTensor(),
     transforms.Normalize(
