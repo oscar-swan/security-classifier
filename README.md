@@ -15,6 +15,7 @@ Still image classifier for security and CCTV frames. Detects whether the focus o
 - [Stress Testing](#stress-testing)
 - [Deployment](#deployment)
 - [Technologies Used](#technologies-used)
+- [Explainability](#explainability)
 - [Evaluation](#evaluation)
 - [Further Improvements in Order](#further-improvements-in-order)
 
@@ -171,6 +172,23 @@ Forcing the program to run with a single thread only when run on Render fixed th
 - **Frontend:** Vanilla JS, CSS, IBM Plex Mono
 - **Dev environment:** PyCharm, Windows, RTX 4060ti (local training)
 - **Version control:** Git / GitHub
+
+## Explainability
+To understand why the model misclassified several images and why a chimpanzee with clothes was classed as a human, I implemented Grad-CAM to generate heatmaps. For this explainability test I curated a new set of images:
+
+- 3 correctly classified images from each class as a baseline
+- The 6 misclassified images
+- Up close images of a human face
+- Chimpanzee & Dog (Clothed/Unclothed)
+- Whale, NASA shuttle, Spaceship
+
+The resulting heatmaps showed me that:
+
+- The correctly classified images showed a heatmap location on the object correctly identifying it without distraction from the setting, confirming my attempt to remove setting bias was successful.
+- The human images misclassified as vehicles both demonstrated that both the human and vehicle objects were located, but despite the human being the main focus they settled on the larger object being the vehicle. This suggests an expanded training dataset including more of these edge case images would benefit model accuracy. Other notable findings included the model classing a car with the roof covered from above as nothing, but there was heat on the front of the car for vehicle suggesting it did notice it but was not familiar with top-down angles and images where the view of the vehicle is obstructed. The empty scene classed as 'animal' showed heat on a bush which was different from the small marks on the ground as I previously suspected. This image was greyscale, so another image from this video scene was also tested in colour and the model correctly identified that as nothing. This suggests that the greyscale has convinced the model that a bush is an animal. More obscure greyscale images in training data would help tackle this issue.
+- Out of the 3 up close human face images, only one was correctly classed. The correctly classed one had heat on the raincoat and chest while also identifying a background car as a vehicle but understanding the human was the focus. This suggests the model cannot recognise a human face as human and an expanded training dataset to include these types of image will improve the model's real-world practicality. The classification based on clothing is a theme I will expand on.
+- Both the clothed chimpanzee and clothed dog were identified as human while the unclothed versions were identified as animals. The heat surrounded the clothes in the clothed images which would suggest that clothing is indeed a 'human' signal, but I cannot be sure as the images have other variations such as location, lighting and the animals' pose. My first attempt to remove this potential bias was to create three new versions of the clothed chimp image (originally 96.6% human), covering parts of it with grey boxes like the padding my RandomZoomOut augmentation adds, although these were inside the image rather than around the border. Covering the hands made no difference (98.9% human), covering the shorts lowered it slightly (88.3% human) and covering all of the clothing actually raised it to 99.3% human. As the mask covering all of the clothing kept the outline of the clothes, I believed the grey shape itself was still giving a 'clothing' signal, so I had to find another method. I used synthetic imagery again by using AI to remove the chimpanzee's clothing but keeping almost everything about the rest of the image identical which resulted in an animal classification (78.8% animal, 11.6% human). The remaining 11.6% human suggests the pose or indoor setting still adds some human evidence, but clothing was the deciding factor. This confirms that my suspicion of clothing being a human indicator is likely true although further testing on multiple other images would be required before I would be certain. The fur replacing the clothes was also AI generated so there is a risk the model reacted to that but with heat on the face too I believe that it is unlikely. My conclusion is that I believe the model sees clothing = human rather than person = human. In practice it does not matter much that the model would struggle with unclothed humans or clothed animals, as most CCTV cameras will rarely see either, but the model could be corrected by adding clothed and mostly unclothed humans to the training dataset. The same reliance on clothing does likely explain the close-up face failures above though, as very little clothing is visible in those images, which is a more practical issue for doorbell cameras.
+- The NASA shuttle that was classed as human had heat around the lower end of the shuttle where flames come out on launch. This makes me suspect the model is seeing the rocket exhausts as clothing with the exhaust flames as legs. The sci-fi spaceship classed as vehicle had heat around the front window which makes me think that is a trait learned from cars. The whale classed as vehicle had heat around the front of its body, although I am unsure why this was. I have not investigated these cases further at this time as these objects will not appear on home CCTV, I just found them interesting.
 
 ## Evaluation
 
