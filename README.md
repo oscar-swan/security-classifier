@@ -174,7 +174,7 @@ Forcing the program to run with a single thread only when run on Render fixed th
 - **Version control:** Git / GitHub
 
 ## Explainability
-To understand why the model misclassified several images and why a chimpanzee with clothes was classed as a human, I implemented Grad-CAM to generate heatmaps. For this explainability test I curated a new set of images:
+To understand why the model misclassified several images and why a chimpanzee with clothes was classed as a human, I implemented CAM to generate heatmaps. For this explainability test I curated a new set of images:
 
 - 3 correctly classified images from each class as a baseline
 - The 6 misclassified images
